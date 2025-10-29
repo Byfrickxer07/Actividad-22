@@ -1,0 +1,142 @@
+{
+  "name": "Web Form Submission to Email and Spreadsheet",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Informacion de contacto",
+        "formDescription": "Ingrese sus datos de  contacto",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Nombre",
+              "placeholder": "Ingrese su nombre",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Apellido",
+              "placeholder": "Ingrese su apellido",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Correo",
+              "placeholder": "Ingrese su correo",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "501f630b-9162-42f5-8ecf-e1df13859d2a",
+      "name": "On form submission",
+      "webhookId": "26708c58-0efc-40a2-ba25-53b7f3e95c9f"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1UgNeOXK7pP1D05Gre9u0KEhaKEe5T-7HIBECA6jf5Mo",
+          "mode": "list",
+          "cachedResultName": "hola",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UgNeOXK7pP1D05Gre9u0KEhaKEe5T-7HIBECA6jf5Mo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1UgNeOXK7pP1D05Gre9u0KEhaKEe5T-7HIBECA6jf5Mo/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Correo": "={{ $json.Correo }}",
+            "Nombre ": "={{ $json.Nombre }}",
+            "Apellido": "={{ $json.Apellido }}"
+          },
+          "matchingColumns": [
+            "Correo"
+          ],
+          "schema": [
+            {
+              "id": "Nombre ",
+              "displayName": "Nombre ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Apellido",
+              "displayName": "Apellido",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Correo",
+              "displayName": "Correo",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        192,
+        0
+      ],
+      "id": "560bcff4-c74c-44f1-9777-7ac9af62d881",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "LanmwKxOCYGzt3Bh",
+          "name": "Google Sheets account 3"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "abdf709d-3936-4a95-ae16-7b1dd19a2a5e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f1d17553097b9771a79713cda8ba4f6646c31641439c4306052d649d62797196"
+  },
+  "id": "CMjwPE9brntg23cJ",
+  "tags": []
+}
