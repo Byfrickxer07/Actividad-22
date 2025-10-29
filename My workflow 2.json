@@ -1,0 +1,136 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        208,
+        160
+      ],
+      "id": "2be8a8fd-b019-49ae-bf1d-a9b106d5e95d",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "LoFwURyWaT5yvreo",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -32,
+        -16
+      ],
+      "id": "4ad790c9-3394-4465-a1ae-9e8eee6b0407",
+      "name": "tomar mensaje del chat",
+      "webhookId": "f91c3a67-0fe6-4e5b-88a9-bbb6b0298793",
+      "credentials": {
+        "telegramApi": {
+          "id": "a85j2MKYfpXdymk0",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text }}",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        208,
+        -16
+      ],
+      "id": "0397fe54-56c2-4ddc-802a-b4a435f859e7",
+      "name": "modelo de chat OpenAI"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message.chat.id }}",
+        "text": "{{  $json.output  }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        544,
+        -16
+      ],
+      "id": "4bff2f94-06b3-407d-8457-cd4b760058b6",
+      "name": "Devolver mensaje en el chat",
+      "webhookId": "7e3ea19e-d21a-4cce-897b-70380e32f1bb",
+      "credentials": {
+        "telegramApi": {
+          "id": "a85j2MKYfpXdymk0",
+          "name": "Telegram account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "modelo de chat OpenAI",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "tomar mensaje del chat": {
+      "main": [
+        [
+          {
+            "node": "modelo de chat OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "modelo de chat OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Devolver mensaje en el chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "8e0d1e95-6deb-4ccd-a68f-8f6001efc725",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f1d17553097b9771a79713cda8ba4f6646c31641439c4306052d649d62797196"
+  },
+  "id": "iC3OQLNnVLIqqiAM",
+  "tags": []
+}
